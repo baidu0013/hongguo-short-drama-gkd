@@ -4,7 +4,9 @@
 
 ## 订阅
 
-公开仓库确定后，此处补充 `gkd.json5` 的 GitHub Raw 订阅链接。当前准备文件尚不代表已经发布。
+GitHub Raw 订阅链接：
+
+`https://raw.githubusercontent.com/baidu0013/hongguo-short-drama-gkd/main/gkd.json5`
 
 在 GKD 的订阅管理中添加该文件的原始内容链接，然后确认红果应用下需要的规则组已经启用。请不要将 GitHub 文件浏览页面地址当成订阅地址。
 
