@@ -1,148 +1,172 @@
 {
-  id: 1967090753,
-  name: '红果短剧广告规则',
-  version: 1,
-  apps: [
+  id: 'com.phoenix.read',
+  name: '红果免费短剧',
+  groups: [
     {
-      id: 'com.phoenix.read',
-      name: '红果免费短剧',
-      groups: [
+      key: 0,
+      name: '开屏广告',
+      desc: '自动点击[跳过]按钮',
+      actionMaximum: 1,
+      matchTime: 10000,
+      resetMatch: 'app',
+      rules: [
         {
-          key: 0,
-          name: '开屏广告',
-          desc: '自动点击[跳过]按钮',
-          actionMaximum: 1,
-          matchTime: 10000,
-          resetMatch: 'app',
-          rules: [
-            {
-              matches: [
-                '[text*="跳过"][text.length<10][visibleToUser=true]',
-              ],
-              fastQuery: true,
-            },
-            {
-              matches: [
-                '[id="com.byted.pangle:id/tt_splash_skip_btn"]',
-              ],
-            },
+          matches: [
+            '[text*="跳过"][text.length<10][visibleToUser=true]',
+          ],
+          fastQuery: true,
+        },
+        {
+          matches: [
+            '[id="com.byted.pangle:id/tt_splash_skip_btn"]',
           ],
         },
+      ],
+    },
+    {
+      key: 1,
+      name: '局部广告-阅读-底部卡片广告',
+      desc: '点击X关闭底部卡片广告，再点击[关闭此广告]',
+      fastQuery: true,
+      activityIds: [
+        'com.dragon.read.reader.ui.ReaderActivity',
+      ],
+      rules: [
         {
           key: 1,
-          name: '局部广告-阅读-底部卡片广告',
-          desc: '点击X关闭底部卡片广告，再点击[关闭此广告]',
-          fastQuery: true,
-          activityIds: [
-            'com.dragon.read.reader.ui.ReaderActivity',
+          matches: [
+            'ImageView < @ViewGroup <3 ViewGroup[childCount=5] <n * <n * <n * <n * <n * <n * <n * <n [id="com.phoenix.read:id/root_view"]',
           ],
-          rules: [
-            {
-              key: 1,
-              matches: [
-                'ImageView < @ViewGroup <3 ViewGroup[childCount=5] <n * <n * <n * <n * <n * <n * <n * <n [id="com.phoenix.read:id/root_view"]',
-              ],
-              actionDelay: 200,
-              snapshotUrls: [
-                'https://i.gkd.li/i/27986281',
-              ],
-            },
-            {
-              preKeys: [
-                1,
-              ],
-              matches: [
-                'TextView[text="关闭此广告"]',
-              ],
-              snapshotUrls: [
-                'https://i.gkd.li/i/28024153',
-              ],
-            },
+          actionDelay: 200,
+          snapshotUrls: [
+            'https://i.gkd.li/i/27986281',
           ],
         },
         {
-          key: 2,
-          name: '全屏广告-阅读-视频广告',
-          desc: '滑动翻页跳过视频广告',
-          fastQuery: true,
-          activityIds: [
-            'com.dragon.read.reader.ui.ReaderActivity',
+          preKeys: [
+            1,
           ],
-          rules: [
-            {
-              action: 'swipe',
-              swipeArg: {
-                start: {
-                  x: 'screenWidth*0.8',
-                  y: 'screenHeight/2',
-                },
-                end: {
-                  x: 'screenWidth*0.2',
-                  y: 'screenHeight/2',
-                },
-                duration: 300,
-              },
-              matches: [
-                '[text="点击关闭广告并退出小说"][visibleToUser=true]',
-              ],
-              excludeMatches: [
-                '[text$="秒后，继续阅读下一页"]',
-              ],
-              forcedTime: 3600000,
-              snapshotUrls: [
-                'https://i.gkd.li/i/27988263',
-              ],
+          matches: [
+            'TextView[text="关闭此广告"]',
+          ],
+          snapshotUrls: [
+            'https://i.gkd.li/i/28024153',
+          ],
+        },
+      ],
+    },
+    {
+      key: 2,
+      name: '全屏广告-阅读-视频广告',
+      desc: '滑动翻页跳过视频广告',
+      fastQuery: true,
+      activityIds: [
+        'com.dragon.read.reader.ui.ReaderActivity',
+      ],
+      rules: [
+        {
+          action: 'swipe',
+          swipeArg: {
+            start: {
+              x: 'screenWidth*0.8',
+              y: 'screenHeight/2',
             },
+            end: {
+              x: 'screenWidth*0.2',
+              y: 'screenHeight/2',
+            },
+            duration: 300,
+          },
+          matches: [
+            '[text="点击关闭广告并退出小说"][visibleToUser=true]',
+          ],
+          excludeMatches: [
+            '[text$="秒后，继续阅读下一页"]',
+          ],
+          forcedTime: 3600000,
+          snapshotUrls: [
+            'https://i.gkd.li/i/27988263',
+          ],
+        },
+      ],
+    },
+    {
+      key: 4,
+      name: '青少年模式',
+      desc: '点击[我知道了]',
+      actionMaximum: 1,
+      matchTime: 10000,
+      resetMatch: 'app',
+      rules: [
+        {
+          matches: [
+            'TextView[text="未成年人模式" || text*="青少年模式"]',
           ],
         },
         {
-          key: 4,
-          name: '青少年模式',
-          desc: '点击[我知道了]',
-          actionMaximum: 1,
-          matchTime: 10000,
-          resetMatch: 'app',
-          rules: [
-            {
-              matches: [
-                'TextView[text="未成年人模式" || text*="青少年模式"]',
-              ],
-            },
-            {
-              matches: [
-                'TextView[text="我知道了" || text="知道了"]',
-              ],
-            },
+          matches: [
+            'TextView[text="我知道了" || text="知道了"]',
           ],
         },
+      ],
+    },
+    {
+      key: 5,
+      name: '功能类-短剧页广告上滑持续重试',
+      desc: '检测到可见“上滑继续观看短剧”或“上滑继续看短剧”提示后约1秒首滑；提示仍可见则约2秒间隔持续重试，提示消失不执行。间隔不是严格定时；未完成的等待可能跨提示继承。',
+      actionDelay: 1000,
+      actionCd: 1000,
+      fastQuery: true,
+      activityIds: [
+        'com.dragon.read.component.shortvideo.impl.ShortSeriesActivity',
+      ],
+      rules: [
         {
-          key: 5,
-          name: '功能类-短剧页广告上滑持续重试',
-          desc: '检测到可见“上滑继续观看短剧”或“上滑继续看短剧”提示后约1秒首滑；提示仍可见则约2秒间隔持续重试，提示消失不执行。间隔不是严格定时；未完成的等待可能跨提示继承。',
-          actionDelay: 1000,
-          actionCd: 1000,
-          fastQuery: true,
-          activityIds: [
-            'com.dragon.read.component.shortvideo.impl.ShortSeriesActivity',
-          ],
-          rules: [
-            {
-              action: 'swipe',
-              swipeArg: {
-                start: {
-                  x: 'screenWidth/2',
-                  y: 'screenHeight * 0.7',
-                },
-                end: {
-                  x: 'screenWidth/2',
-                  y: 'screenHeight * 0.3',
-                },
-                duration: 200,
-              },
-              matches: [
-                '[text="上滑继续观看短剧" || text="上滑继续看短剧"][visibleToUser=true]',
-              ],
+          action: 'swipe',
+          swipeArg: {
+            start: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.7',
             },
+            end: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.3',
+            },
+            duration: 200,
+          },
+          matches: [
+            '[text^="上滑继续"][visibleToUser=true]',
+          ],
+        },
+      ],
+    },
+    {
+      key: 6,
+      name: '实验类-直播播放器与底部箭头上滑',
+      desc: '默认关闭，需手动开启测试。匹配同一双子节点容器中的可见直播播放器子树与位于其下方的无名图片箭头；结构未证实为广告专属，可能误滑。约1秒后尝试上滑，条件仍满足时继续重试，间隔非严格定时；误滑请立即停用。',
+      enable: false,
+      fastQuery: false,
+      actionDelay: 1000,
+      actionCd: 1000,
+      activityIds: [
+        'com.dragon.read.component.shortvideo.impl.ShortSeriesActivity',
+      ],
+      rules: [
+        {
+          action: 'swipe',
+          swipeArg: {
+            start: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.7',
+            },
+            end: {
+              x: 'screenWidth/2',
+              y: 'screenHeight * 0.3',
+            },
+            duration: 200,
+          },
+          matches: [
+            '[vid="ttlive_player_render_view"][visibleToUser=true] <<n ViewGroup[visibleToUser=true] + @ImageView[id=null][text=null][desc=null][visibleToUser=true][childCount=0][parent.name="android.view.ViewGroup"][parent.visibleToUser=true][parent.childCount=2][top>=parent.getChild(0).bottom][bottom<=parent.bottom]',
           ],
         },
       ],
