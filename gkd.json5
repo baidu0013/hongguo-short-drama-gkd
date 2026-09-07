@@ -1,0 +1,151 @@
+{
+  id: 1967090753,
+  name: '红果短剧广告规则',
+  version: 1,
+  apps: [
+    {
+      id: 'com.phoenix.read',
+      name: '红果免费短剧',
+      groups: [
+        {
+          key: 0,
+          name: '开屏广告',
+          desc: '自动点击[跳过]按钮',
+          actionMaximum: 1,
+          matchTime: 10000,
+          resetMatch: 'app',
+          rules: [
+            {
+              matches: [
+                '[text*="跳过"][text.length<10][visibleToUser=true]',
+              ],
+              fastQuery: true,
+            },
+            {
+              matches: [
+                '[id="com.byted.pangle:id/tt_splash_skip_btn"]',
+              ],
+            },
+          ],
+        },
+        {
+          key: 1,
+          name: '局部广告-阅读-底部卡片广告',
+          desc: '点击X关闭底部卡片广告，再点击[关闭此广告]',
+          fastQuery: true,
+          activityIds: [
+            'com.dragon.read.reader.ui.ReaderActivity',
+          ],
+          rules: [
+            {
+              key: 1,
+              matches: [
+                'ImageView < @ViewGroup <3 ViewGroup[childCount=5] <n * <n * <n * <n * <n * <n * <n * <n [id="com.phoenix.read:id/root_view"]',
+              ],
+              actionDelay: 200,
+              snapshotUrls: [
+                'https://i.gkd.li/i/27986281',
+              ],
+            },
+            {
+              preKeys: [
+                1,
+              ],
+              matches: [
+                'TextView[text="关闭此广告"]',
+              ],
+              snapshotUrls: [
+                'https://i.gkd.li/i/28024153',
+              ],
+            },
+          ],
+        },
+        {
+          key: 2,
+          name: '全屏广告-阅读-视频广告',
+          desc: '滑动翻页跳过视频广告',
+          fastQuery: true,
+          activityIds: [
+            'com.dragon.read.reader.ui.ReaderActivity',
+          ],
+          rules: [
+            {
+              action: 'swipe',
+              swipeArg: {
+                start: {
+                  x: 'screenWidth*0.8',
+                  y: 'screenHeight/2',
+                },
+                end: {
+                  x: 'screenWidth*0.2',
+                  y: 'screenHeight/2',
+                },
+                duration: 300,
+              },
+              matches: [
+                '[text="点击关闭广告并退出小说"][visibleToUser=true]',
+              ],
+              excludeMatches: [
+                '[text$="秒后，继续阅读下一页"]',
+              ],
+              forcedTime: 3600000,
+              snapshotUrls: [
+                'https://i.gkd.li/i/27988263',
+              ],
+            },
+          ],
+        },
+        {
+          key: 4,
+          name: '青少年模式',
+          desc: '点击[我知道了]',
+          actionMaximum: 1,
+          matchTime: 10000,
+          resetMatch: 'app',
+          rules: [
+            {
+              matches: [
+                'TextView[text="未成年人模式" || text*="青少年模式"]',
+              ],
+            },
+            {
+              matches: [
+                'TextView[text="我知道了" || text="知道了"]',
+              ],
+            },
+          ],
+        },
+        {
+          key: 5,
+          name: '功能类-短剧页广告上滑持续重试',
+          desc: '检测到可见“上滑继续观看短剧”或“上滑继续看短剧”提示后约1秒首滑；提示仍可见则约2秒间隔持续重试，提示消失不执行。间隔不是严格定时；未完成的等待可能跨提示继承。',
+          actionDelay: 1000,
+          actionCd: 1000,
+          fastQuery: true,
+          activityIds: [
+            'com.dragon.read.component.shortvideo.impl.ShortSeriesActivity',
+          ],
+          rules: [
+            {
+              action: 'swipe',
+              swipeArg: {
+                start: {
+                  x: 'screenWidth/2',
+                  y: 'screenHeight * 0.7',
+                },
+                end: {
+                  x: 'screenWidth/2',
+                  y: 'screenHeight * 0.3',
+                },
+                duration: 200,
+              },
+              matches: [
+                '[text="上滑继续观看短剧" || text="上滑继续看短剧"][visibleToUser=true]',
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
